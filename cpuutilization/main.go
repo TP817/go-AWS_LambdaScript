@@ -1,19 +1,51 @@
 package main
 
 import (
-    "fmt"
-    "time"
-    "strconv"
-    "bytes"
+	"bytes"
+	"fmt"
+	"strconv"
+	"time"
 
-    "github.com/aws/aws-lambda-go/lambda"
-    "github.com/aws/aws-sdk-go/service/ec2"
-    "github.com/aws/aws-sdk-go/service/cloudwatch"
-    "github.com/aws/aws-sdk-go/service/sts"
-    "github.com/aws/aws-sdk-go/aws/session"
-    "github.com/aws/aws-sdk-go/aws"
-    "github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/cloudwatch"
+	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/service/sts"
 )
+
+
+// type Ro1 struct {
+//     instanceID     string
+//     cpuUtilization float64
+//     accountID      int64
+//     region         string
+//     timeStamp      time.Time
+// }
+// type Encoder struct {
+//     colNames string
+//     r    []Ro1
+// }
+
+
+// marshalInt := func(n *int) ([]byte, error) {
+//     if n == nil {
+//         return []byte("NULL"), nil
+//     }
+//     return strconv.AppendInt(nil, int64(*n), 16), nil
+// }
+
+// marshalTime := func(t time.Time) ([]byte, error) {
+//     return t.AppendFormat(nil, time.Kitchen), nil
+// }
+
+// // all fields which implement String method will use this, unless their
+// // concrete type was already overriden.
+// marshalStringer := func(s fmt.Stringer) ([]byte, error) {
+//     return []byte(s.String()), nil
+// }
+
 
 func UploadFile(s *session.Session, bucketName string, objectKey string, payload [][]string) error {
     body := ""
@@ -42,7 +74,7 @@ func HandleRequest() {
         SharedConfigState: session.SharedConfigEnable,
     }))
 
-    conf := aws.NewConfig().WithRegion("us-east-2")
+    conf := aws.NewConfig().WithRegion("us-east-1")
     // s3session, err := session.NewSession(&aws.Config{
     //     Region: aws.String("us-east-2")},
     // )
@@ -60,8 +92,8 @@ func HandleRequest() {
     var period int64
     period = 3600
 
-    startTime := aws.Time(time.Now().UTC().Add(time.Second * -3600 * 24))
-    endTime := aws.Time(time.Now().UTC())
+    startTime := (aws.Time(time.Now().UTC().Add(time.Second * -3600 * 24)))
+    endTime := (aws.Time(time.Now().UTC()))
 
     for _, region := range regions.Regions {
         // Create new EC2 client
@@ -112,20 +144,25 @@ func HandleRequest() {
                     temp := strconv.FormatFloat(*record.Maximum, 'f', 6, 64)
                     intTemp, _ := strconv.ParseInt(accountID, 10, 64)
                     accountTemp := strconv.FormatInt(intTemp, 10)
-                    tempTime := record.Timestamp.String()
+                    tempTime := record.Timestamp
+                    unix := tempTime.Unix()
+                    unixTime := strconv.FormatInt(unix, 10)
+                    midTime, _ := strconv.ParseInt(unixTime, 10, 64)
+                    unixTimeUTC := time.Unix(midTime, 0)
+                    unixTimeRFC3339 := unixTimeUTC.Format(time.RFC3339)
                     payload = append(payload, []string{
                         *i.InstanceId,
                         temp,
                         accountTemp,
                         regionName,
-                        tempTime,
+                        unixTimeRFC3339,
                     })
                 }
             }
         }
     }
 
-    err = UploadFile(sess, "monitoring-v0", "CPUUtilization.csv",  payload)
+    err = UploadFile(sess, "monitoring-v0-test", "CPUUtilization.csv",  payload)
     if err != nil {
         fmt.Println("Error", err)
     }
