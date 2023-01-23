@@ -24,8 +24,6 @@ import (
 //     timeStamp      time.Time
 // }
 // type Encoder struct {
-//     colNames string
-//     r    []Ro1
 // }
 
 
