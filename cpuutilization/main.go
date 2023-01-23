@@ -21,7 +21,6 @@ import (
 //     cpuUtilization float64
 //     accountID      int64
 //     region         string
-//     timeStamp      time.Time
 // }
 // type Encoder struct {
 // }
