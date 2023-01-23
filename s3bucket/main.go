@@ -70,7 +70,7 @@ func HandleRequest() {
         if err != nil {
             fmt.Println("Error", err)
         }
-        // fmt.Println(region)
+ 
         bucketName := *bucket.Name
 
         conf := aws.NewConfig().WithRegion(region)
