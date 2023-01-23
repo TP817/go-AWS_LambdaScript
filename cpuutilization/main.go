@@ -20,7 +20,6 @@ import (
 //     instanceID     string
 //     cpuUtilization float64
 //     accountID      int64
-
 // }
 // type Encoder struct {
 // }
