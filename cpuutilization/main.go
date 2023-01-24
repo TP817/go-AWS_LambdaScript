@@ -19,8 +19,7 @@ import (
 // type Ro1 struct {
 //     cpuUtilization float6
 // }
-// type Encoder struct {
-// }
+
 
 
 // marshalInt := func(n *int) ([]byte, error) {
