@@ -54,7 +54,6 @@ func HandleRequest() {
 
     s3Client := s3.New(sess)
     // bucketManager := s3manager.New(sess, conf)
-    // currentTime := time.Now().UTC()
     // title := currentTime.Format("2006-01-02")
 
     var payload [][]string;
