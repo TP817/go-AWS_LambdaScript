@@ -17,11 +17,9 @@ import (
 
 
 // type Ro1 struct {
-//     instanceID     string
 //     cpuUtilization float6
 // }
-// type Encoder struct {
-// }
+
 
 
 // marshalInt := func(n *int) ([]byte, error) {
@@ -37,8 +35,6 @@ import (
 
 // // all fields which implement String method will use this, unless their
 // // concrete type was already overriden.
-// marshalStringer := func(s fmt.Stringer) ([]byte, error) {
-//     return []byte(s.String()), nil
 // }
 
 
