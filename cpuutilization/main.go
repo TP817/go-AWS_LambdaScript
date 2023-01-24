@@ -17,7 +17,7 @@ import (
 
 
 // type Ro1 struct {
-//     cpuUtilization float6214123493i4
+//     cpuUtilization float
 // }
 
 
