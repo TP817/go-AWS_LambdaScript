@@ -36,8 +36,6 @@ import (
 
 // // all fields which implement String method will use this, unless their
 // // concrete type was already overriden.
-// marshalStringer := func(s fmt.Stringer) ([]byte, error) {
-//     return []byte(s.String()), nil
 // }
 
 
