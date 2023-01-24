@@ -92,7 +92,7 @@ func HandleRequest() {
             fmt.Println("Error", err)
         }
         accountID := *outCallerIdentity.Account
-        // fmt.Println(len(rules))
+
         if len(rules) == 0 {
             payload = append(payload, []string{
                         *bucket.Name,
