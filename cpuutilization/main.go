@@ -18,7 +18,7 @@ import (
 
 // type Ro1 struct {
 //     instanceID     string
-//     cpuUtilization float64
+//     cpuUtilization float6
 // }
 // type Encoder struct {
 // }
