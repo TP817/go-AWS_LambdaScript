@@ -50,7 +50,7 @@ func HandleRequest() {
         SharedConfigState: session.SharedConfigEnable,
     }))
 
-    // conf := aws.NewConfig().WithRegion("us-east-2")
+    // conf := aws.NewConfig().WithRegion("us-east-2");
 
     s3Client := s3.New(sess)
     // bucketManager := s3manager.New(sess, conf)
